@@ -1,0 +1,101 @@
+@model AppointmentSystemFinal.Models.Appointment
+
+@{
+    ViewData["Title"] = "Randevu Düzenle";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CustomerId" />
+            <input type="hidden" asp-for="CreatedAt" />
+            
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Date" class="form-label"></label>
+                    <input asp-for="Date" type="date" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label asp-for="StartTime" class="form-label"></label>
+                    <input asp-for="StartTime" type="time" class="form-control" />
+                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label asp-for="EndTime" class="form-label"></label>
+                    <input asp-for="EndTime" type="time" class="form-control" />
+                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                </div>
+            </div>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="mb-3">
+                    <label asp-for="StaffId" class="form-label">Personel</label>
+                    <select asp-for="StaffId" class="form-select" asp-items="ViewBag.StaffId">
+                        <option value="">-- Personel Seçilmedi --</option>
+                    </select>
+                    <span asp-validation-for="StaffId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Status" class="form-label"></label>
+                    <select asp-for="Status" class="form-select">
+                        <option value="Pending">Beklemede</option>
+                        <option value="Approved">Onaylandı</option>
+                        <option value="Rejected">Reddedildi</option>
+                        <option value="Cancelled">İptal Edildi</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="StaffNote" class="form-label"></label>
+                    <textarea asp-for="StaffNote" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="StaffNote" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <input type="hidden" asp-for="StaffId" />
+                <input type="hidden" asp-for="Status" />
+                <input type="hidden" asp-for="StaffNote" />
+            }
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Kaydet
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> İptal
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+}

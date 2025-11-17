@@ -1,0 +1,104 @@
+@model AppointmentSystemFinal.Models.Appointment
+
+@{
+    ViewData["Title"] = "Randevu Durumu Değiştir";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-3">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Randevu Bilgileri</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Başlık:</dt>
+                    <dd class="col-sm-8"><strong>@Model.Title</strong></dd>
+
+                    <dt class="col-sm-4">Müşteri:</dt>
+                    <dd class="col-sm-8">@Model.Customer?.FullName</dd>
+
+                    <dt class="col-sm-4">Tarih:</dt>
+                    <dd class="col-sm-8">@Model.Date.ToString("dd MMMM yyyy dddd")</dd>
+
+                    <dt class="col-sm-4">Saat:</dt>
+                    <dd class="col-sm-8">@Model.StartTime.ToString(@"hh\:mm") - @Model.EndTime.ToString(@"hh\:mm")</dd>
+
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        <dt class="col-sm-4">Açıklama:</dt>
+                        <dd class="col-sm-8">@Model.Description</dd>
+                    }
+
+                    <dt class="col-sm-4">Mevcut Durum:</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge bg-@Model.StatusColor fs-6">@Model.StatusDisplay</span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Durum Güncelle</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="ChangeStatus" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Yeni Durum</label>
+                        <select name="status" id="status" class="form-select" required>
+                            <option value="">-- Durum Seçin --</option>
+                            <option value="Approved" selected>Onaylandı</option>
+                            <option value="Rejected">Reddedildi</option>
+                            <option value="Cancelled">İptal Edildi</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="staffNote" class="form-label">Personel Notu (Opsiyonel)</label>
+                        <textarea name="staffNote" id="staffNote" class="form-control" rows="4" 
+                                  placeholder="Randevu hakkında notlar...">@Model.StaffNote</textarea>
+                        <small class="form-text text-muted">Müşteri bu notu görebilecektir.</small>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle"></i> Durumu Güncelle
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> İptal
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-warning">
+                <i class="bi bi-lightbulb"></i> Bilgilendirme
+            </div>
+            <div class="card-body">
+                <h6>Durum Açıklamaları:</h6>
+                <ul class="small">
+                    <li><strong>Onaylandı:</strong> Randevu onaylanmış, gerçekleşecek</li>
+                    <li><strong>Reddedildi:</strong> Randevu uygun görülmedi</li>
+                    <li><strong>İptal Edildi:</strong> Randevu iptal edildi</li>
+                </ul>
+                <hr />
+                <p class="small mb-0">Personel notu müşteri tarafından görülebilir. Lütfen profesyonel bir dil kullanın.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+}

@@ -1,0 +1,93 @@
+@model AppointmentSystemFinal.Models.Appointment
+
+@{
+    ViewData["Title"] = "Yeni Randevu Oluştur";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" placeholder="Örn: Diyetisyen Görüşmesi" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Randevu detayları..."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Date" class="form-label"></label>
+                    <input asp-for="Date" type="date" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label asp-for="StartTime" class="form-label"></label>
+                    <input asp-for="StartTime" type="time" class="form-control" />
+                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label asp-for="EndTime" class="form-label"></label>
+                    <input asp-for="EndTime" type="time" class="form-control" />
+                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="StaffId" class="form-label">Personel Seçin (Opsiyonel)</label>
+                <select asp-for="StaffId" class="form-select" asp-items="ViewBag.StaffId">
+                    <option value="">-- Personel Seçilmedi --</option>
+                </select>
+                <span asp-validation-for="StaffId" class="text-danger"></span>
+                <small class="form-text text-muted">Belirli bir personel tercih ediyorsanız seçin.</small>
+            </div>
+
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> Randevunuz oluşturulduktan sonra personel tarafından onaylanacaktır.
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Randevu Oluştur
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> İptal
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <i class="bi bi-lightbulb"></i> Bilgilendirme
+            </div>
+            <div class="card-body">
+                <h6>Randevu Oluştururken Dikkat Edilmesi Gerekenler:</h6>
+                <ul class="small">
+                    <li>Randevu tarihi bugünden önceki bir tarih olamaz</li>
+                    <li>Başlangıç saati bitiş saatinden önce olmalıdır</li>
+                    <li>Personel seçimi opsiyoneldir</li>
+                    <li>Randevunuz onaylanana kadar "Beklemede" durumunda olacaktır</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+}

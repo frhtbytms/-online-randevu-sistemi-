@@ -1,0 +1,227 @@
+@model AppointmentSystemFinal.Controllers.AppointmentReportViewModel
+
+@{
+    ViewData["Title"] = "Sistem Raporları";
+}
+
+<h2><i class="bi bi-bar-chart-fill"></i> Sistem Raporları</h2>
+
+<hr />
+
+<!-- Genel İstatistikler -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center bg-primary text-white">
+            <div class="card-body">
+                <h1 class="display-4">@Model.TotalAppointments</h1>
+                <p class="mb-0">Toplam Randevu</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center bg-success text-white">
+            <div class="card-body">
+                <h1 class="display-4">@Model.TotalUsers</h1>
+                <p class="mb-0">Toplam Kullanıcı</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center bg-info text-white">
+            <div class="card-body">
+                <h1 class="display-4">@Model.TotalCustomers</h1>
+                <p class="mb-0">Müşteri Sayısı</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center bg-warning text-white">
+            <div class="card-body">
+                <h1 class="display-4">@Model.TotalStaff</h1>
+                <p class="mb-0">Personel Sayısı</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Randevu Durumları -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-pie-chart"></i> Randevu Durumları</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <h3 class="text-warning">@Model.PendingAppointments</h3>
+                            <p class="mb-0">Beklemede</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <h3 class="text-success">@Model.ApprovedAppointments</h3>
+                            <p class="mb-0">Onaylandı</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <h3 class="text-danger">@Model.RejectedAppointments</h3>
+                            <p class="mb-0">Reddedildi</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <h3 class="text-secondary">@Model.CancelledAppointments</h3>
+                            <p class="mb-0">İptal Edildi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bu Hafta ve Bu Ay -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="bi bi-calendar-week"></i> Bu Hafta</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <td>Toplam Randevu:</td>
+                        <td class="text-end"><strong>@Model.ThisWeekAppointments</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Onaylanan:</td>
+                        <td class="text-end"><span class="badge bg-success">@Model.ThisWeekApproved</span></td>
+                    </tr>
+                    <tr>
+                        <td>Reddedilen:</td>
+                        <td class="text-end"><span class="badge bg-danger">@Model.ThisWeekRejected</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="bi bi-calendar-month"></i> Bu Ay</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <td>Toplam Randevu:</td>
+                        <td class="text-end"><strong>@Model.ThisMonthAppointments</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Onaylanan:</td>
+                        <td class="text-end"><span class="badge bg-success">@Model.ThisMonthApproved</span></td>
+                    </tr>
+                    <tr>
+                        <td>Reddedilen:</td>
+                        <td class="text-end"><span class="badge bg-danger">@Model.ThisMonthRejected</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bugün -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h5 class="mb-0"><i class="bi bi-calendar-day"></i> Bugün</h5>
+            </div>
+            <div class="card-body text-center">
+                <h2 class="display-3">@Model.TodayAppointments</h2>
+                <p class="lead">Bugün toplam randevu sayısı</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Son 7 Gün Grafiği -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0"><i class="bi bi-graph-up"></i> Son 7 Gün Randevu Trendi</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="appointmentChart" style="max-height: 300px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ek Raporlar -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="bi bi-file-earmark-text"></i> Diğer Raporlar</h5>
+            </div>
+            <div class="card-body">
+                <a asp-action="StaffReport" class="btn btn-outline-primary">
+                    <i class="bi bi-person-badge"></i> Personel Performans Raporu
+                </a>
+                <a asp-controller="Appointments" asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-list"></i> Tüm Randevuları Görüntüle
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Chart.js ile grafik çizimi
+        var ctx = document.getElementById('appointmentChart').getContext('2d');
+        var chartData = {
+            labels: [@Html.Raw(string.Join(",", Model.Last7DaysData.Keys.Select(k => $"'{k}'")))],
+            datasets: [{
+                label: 'Randevu Sayısı',
+                data: [@string.Join(",", Model.Last7DaysData.Values)],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        };
+
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    </script>
+}
