@@ -26,6 +26,7 @@ Projeyi geliştirirken şu teknolojileri kullandım:
 - **Razor View Engine**: Server-side rendering
 - **Bootstrap 5**: Responsive UI
 - **Chart.js**: Raporlama için grafik desteği
+ - **Öğrenci Dostu Tema**: Pastel arka plan, yuvarlatılmış kartlar ve pill etiketler ile sade, anlaşılır bir arayüz
 
 ### Neden Bu Stack?
 
@@ -33,6 +34,13 @@ Projeyi geliştirirken şu teknolojileri kullandım:
 2. **Entity Framework**: ORM ile veritabanı işlemlerini kolaylaştırır
 3. **Identity**: Hazır authentication/authorization sistemi
 4. **MVC Pattern**: Kodun düzenli ve bakımının kolay olması
+
+## 🔄 Güncellemeler (v1.1)
+
+- Arayüzü sade ve öğrenci işi bir temaya taşıdım (pastel arka plan, yuvarlatılmış kartlar, pill etiketler, daha yumuşak butonlar).
+- Ana sayfaya "3 Adımda Başla" ve "Roller ve Yetkiler" bölümleri ekledim; uygulamanın akışı daha anlaşılır.
+- Lokal demo için InMemory veritabanı modunu ekledim (veriler kalıcı değil, sadece hızlı deneme için). Kalıcı SQL Server kullanımı `appsettings.json` ve `UseSqlServer` ile devam ediyor.
+- Yerel çalıştırmada HTTPS yönlendirmeyi kapattım; HTTP ile `http://localhost:5012` üzerinden demo kullanılabiliyor.
 
 ## 🎭 Rol Tabanlı Yetkilendirme: Sistemin Kalbi
 
@@ -396,6 +404,21 @@ View'da kullanımı:
 ```
 
 ### Rol Bazlı Menü
+
+Ana sayfada öğrenci dostu bir açılış bölümü, hızlı aksiyon butonları ve rol/akış özetleri bulunuyor. Arayüz Bootstrap 5 üzerine kurulu ve sade.
+
+## ▶️ Hızlı Çalıştırma (Demo)
+
+Yerel demo için InMemory modunu açtım:
+
+```bash
+cd AppointmentSystemFinal
+dotnet run --urls=http://localhost:5012
+```
+
+Sonra tarayıcıdan `http://localhost:5012` ile erişiyorum. Admin hesabı otomatik geliyor: `admin@site.com / Admin123!`.
+
+Kalıcı veri için SQL Server bağlantısını `appsettings.json` ile ayarlayıp `UseSqlServer` yapılandırmasını kullanıyorum.
 
 ```html
 @if (User.IsInRole("Admin"))

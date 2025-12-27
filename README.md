@@ -6,7 +6,7 @@ ASP.NET Core MVC ile yapılmış randevu sistemi projesi.
 
 - ASP.NET Core 8.0 MVC
 - Entity Framework Core (Code First)
-- SQL Server LocalDB
+- SQL Server LocalDB (kalıcı veritabanı için)
 - ASP.NET Core Identity
 - Bootstrap 5
 - C#
@@ -45,31 +45,45 @@ ASP.NET Core MVC ile yapılmış randevu sistemi projesi.
 ### Gereklilikler
 - .NET 8.0 SDK
 - Visual Studio 2022 veya VS Code
-- SQL Server LocalDB
+- (Opsiyonel) SQL Server LocalDB veya başka bir ilişkisel DB
 
-### Adımlar
+### Hızlı Demo (InMemory DB — kalıcı değil)
 
-1. Projeyi aç:
+1) Projeyi çalıştır:
 ```bash
 cd AppointmentSystemFinal
+dotnet run --urls=http://localhost:5012
 ```
 
-2. appsettings.json'daki connection string'i kontrol et:
+2) Tarayıcıda aç: http://localhost:5012 (yalnızca HTTP)
+
+Notlar:
+- İlk açılışta roller ve admin hesabı otomatik eklenir.
+- InMemory modunda veriler uygulama kapanınca silinir.
+- Lokal demo için HTTPS yönlendirme devre dışı bırakıldı.
+
+### Kalıcı DB (SQL Server veya alternatif)
+
+1) `appsettings.json` içinde bağlantıyı ayarla:
 ```json
-"DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=AppointmentSystemDb;..."
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=AppointmentSystemDb;Trusted_Connection=true;MultipleActiveResultSets=true"
+  }
+}
 ```
 
-3. Migration'ları uygula:
+2) `Program.cs` dosyasında `UseSqlServer` yapılandırmasını etkinleştir (gerekirse geri alın).
+
+3) Migration ve veritabanı güncelleme:
 ```bash
 dotnet ef database update
 ```
 
-4. Uygulamayı çalıştır:
+4) Uygulamayı çalıştır:
 ```bash
-dotnet run
+dotnet run --urls=http://localhost:5001
 ```
-
-5. Tarayıcıda aç: https://localhost:5001
 
 ## İlk Giriş
 
@@ -142,7 +156,8 @@ Views/
 
 ## Önemli Notlar
 
-- İlk çalıştırmada migration otomatik uygulanır
+- Hızlı demo modunda InMemory DB kullanılır (veriler kalıcı değildir)
+- Kalıcı DB modunda migration otomatik uygulanır
 - Admin, Staff, Customer rolleri otomatik oluşur
 - admin@site.com kullanıcısı otomatik oluşur
 - Müşteri sadece kendi randevularını görebilir

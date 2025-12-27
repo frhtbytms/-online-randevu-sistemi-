@@ -8,13 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Veritabani baglantisi
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
-// DbContext ekleniyor
+// DbContext ekleniyor (InMemory - hizli calistirma, gecici veritabanı)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseInMemoryDatabase("AppointmentSystemDb"));
 
 // Identity sistemi (kullanici girisi icin)
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => 
@@ -46,11 +42,11 @@ using (var scope = app.Services.CreateScope())
     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-    // Veritabanini olustur
+    // Veritabanini hazirla
     try
     {
-        context.Database.Migrate();
-        Console.WriteLine("Veritabani olusturuldu.");
+        context.Database.EnsureCreated();
+        Console.WriteLine("InMemory veritabani hazirlandi.");
     }
     catch (Exception ex)
     {
@@ -110,10 +106,8 @@ using (var scope = app.Services.CreateScope())
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+    // HSTS ve HTTPS yönlendirmeyi devre dışı bırakıyoruz (lokalde sadece HTTP ile çalışıyoruz)
 }
-
-app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();

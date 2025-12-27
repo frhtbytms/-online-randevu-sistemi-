@@ -133,9 +133,10 @@
 5. ✅ Kullanıcı silme
 
 ## 🔧 Derleme ve Çalıştırma
-- ✅ `dotnet build` başarılı (11 warning, 0 error)
-- ✅ `dotnet run` çalışıyor
-- ✅ https://localhost:5001 erişilebilir
+- ✅ `dotnet build` başarılı (uyarılar olabilir, hatasız)
+- ✅ Hızlı demo (InMemory): `dotnet run --urls=http://localhost:5012`
+- ✅ Tarayıcı: `http://localhost:5012` (HTTP, HTTPS yönlendirme yok)
+- ✅ Kalıcı DB için: `appsettings.json` bağlantısını ayarla, `dotnet ef database update`, ardından `dotnet run`
 
 ## 📦 Teslim Dosyaları
 
@@ -197,6 +198,6 @@ PROJE_RAPORU.md dosyasında **[Soyadınız]**, **[Numaranız]**, **[Hoca Adı]**
 
 ---
 
-**Hazırlayan:** GitHub Copilot  
+**Hazırlayan:** Ferhat Bayutmuş
 **Tarih:** 17 Kasım 2025  
 **Durum:** ✅ Proje Tamamlandı ve Teslime Hazır!

@@ -2,9 +2,96 @@
     ViewData["Title"] = "Ana Sayfa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Randevu Yönetim Sistemi</h1>
-    <p class="lead">Online randevu oluşturma ve yönetim platformu</p>
+<div class="hero-card mb-4">
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
+        <div class="mb-3 mb-md-0">
+            <span class="hero-chip">Öğrenci Projesi</span>
+            <h1 class="display-5 mt-2">Randevu Yönetim Sistemi</h1>
+            <p class="lead subtext mb-0">Online randevu oluşturma ve yönetim platformu</p>
+        </div>
+        <div>
+            <a asp-controller="Appointments" asp-action="Index" class="btn btn-primary me-2">Randevular</a>
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-outline-primary">Hemen Başla</a>
+        </div>
+    </div>
+</div>
+
+<div class="mb-4">
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <span class="pill"><span class="icon-circle"><i class="bi bi-people"></i></span>3 Rol: Admin / Staff / Customer</span>
+        <span class="pill"><span class="icon-circle"><i class="bi bi-pencil-square"></i></span>Temel CRUD + Durum değişimi</span>
+        <span class="pill"><span class="icon-circle"><i class="bi bi-bar-chart"></i></span>Raporlama ve grafikler</span>
+    </div>
+</div>
+
+<div class="section-block mb-4">
+    <div class="section-title">3 Adımda Başla</div>
+    <div class="step-list">
+        <div class="step-item">
+            <span class="icon-circle"><i class="bi bi-person-plus"></i></span>
+            <div>
+                <strong>1) Kayıt / Giriş</strong>
+                <div class="subtext-sm">Hesap aç veya admin bilgisiyle giriş yap.</div>
+            </div>
+        </div>
+        <div class="step-item">
+            <span class="icon-circle"><i class="bi bi-calendar-plus"></i></span>
+            <div>
+                <strong>2) Randevu Oluştur</strong>
+                <div class="subtext-sm">Tarih-saat seç, personel ata, gönder.</div>
+            </div>
+        </div>
+        <div class="step-item">
+            <span class="icon-circle"><i class="bi bi-check2-circle"></i></span>
+            <div>
+                <strong>3) Onay / Yönet</strong>
+                <div class="subtext-sm">Personel onaylasın, admin raporu görsün.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-block mb-4">
+    <div class="section-title">Roller ve Yetkiler</div>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="role-card">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="icon-circle"><i class="bi bi-shield-lock"></i></span>
+                    <h5 class="mb-0">Admin</h5>
+                </div>
+                <ul>
+                    <li>Tüm randevuları görür</li>
+                    <li>Kullanıcı ve rol yönetir</li>
+                    <li>Raporları inceler</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="role-card">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="icon-circle"><i class="bi bi-clipboard-check"></i></span>
+                    <h5 class="mb-0">Staff</h5>
+                </div>
+                <ul>
+                    <li>Atanan randevuları görür</li>
+                    <li>Onay / Red verir, not ekler</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="role-card">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="icon-circle"><i class="bi bi-person-heart"></i></span>
+                    <h5 class="mb-0">Customer</h5>
+                </div>
+                <ul>
+                    <li>Randevu oluşturur, düzenler, siler</li>
+                    <li>Sadece kendi randevularını görür</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row mt-5">

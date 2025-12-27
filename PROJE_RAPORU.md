@@ -95,12 +95,25 @@ Bu proje, aşağıdaki açılardan önem taşımaktadır:
 - JavaScript tabanlı grafik kütüphanesi
 - İnteraktif ve görsel raporlar için kullanılmıştır
 
+**Öğrenci Dostu Tema (UI Güncellemesi)**
+- Pastel arka planlar ve yuvarlatılmış bileşenler ile sade bir görünüm
+- Ana sayfada "3 Adımda Başla" ve "Roller ve Yetkiler" bölümleri
+- Bootstrap 5 üzerine kurulu, anlaşılır ve temiz bir düzen
+
 #### 2.1.3. Veritabanı
 
 **Microsoft SQL Server LocalDB**
 - Geliştirme ortamı için hafif SQL Server sürümü
 - Tam SQL Server özelliklerini destekler
 - Kolay kurulum ve yapılandırma
+**Microsoft SQL Server (LocalDB veya Gerçek Sunucu)**
+- Kalıcı veri için ilişkisel veritabanı (DB First/Code First)
+- Tam SQL Server özelliklerini destekler
+- Kolay kurulum ve yapılandırma (LocalDB ile)
+
+**InMemory Veritabanı (Demo Ortamı)**
+- Yerel hızlı demo için kullanıldı (kalıcı değildir)
+- Proje kapanınca veriler silinir, sadece tanıtım/deneme amaçlı
 
 #### 2.1.4. Geliştirme Ortamı
 
@@ -320,7 +333,9 @@ dotnet new mvc -n AppointmentSystemFinal --auth Individual
 {
   "ConnectionStrings": {
     "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=AppointmentSystemDb;Trusted_Connection=true;MultipleActiveResultSets=true"
-  }
+#### 3.1.4. Migration ve Veritabanı Oluşturma
+
+#### 3.1.5. Seed Verisi Ekleme
 }
 ```
 
@@ -349,6 +364,23 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Appointment> Appointments { get; set; }
     
     protected override void OnModelCreating(ModelBuilder builder)
+
+#### 3.1.6. Çalıştırma ve Demo Ortamı
+
+Lokal demo için InMemory veritabanı kullanılarak HTTP üzerinden çalıştırılmıştır:
+
+```bash
+dotnet run --urls=http://localhost:5012
+```
+
+Notlar:
+- İlk çalıştırmada `Admin/Staff/Customer` rolleri ve admin hesabı otomatik eklenir.
+- Demo modunda veriler kalıcı değildir (uygulama kapanınca sıfırlanır).
+- Yerelde HTTPS yönlendirme devre dışı bırakılarak sadece HTTP kullanılmıştır.
+
+Kalıcı veri gereksinimi için `UseSqlServer` ile SQL Server bağlantısı etkinleştirilmiştir ve migration'lar uygulanmıştır.
+
+### 3.2. Controller Implementasyonları
     {
         base.OnModelCreating(builder);
         
